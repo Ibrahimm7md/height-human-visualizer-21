@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { User } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface PersonSilhouetteProps {
   height: number; // height in cm
@@ -15,6 +15,8 @@ const PersonSilhouette: React.FC<PersonSilhouetteProps> = ({
   color,
   maxHeight
 }) => {
+  const { t } = useLanguage();
+  
   // Scale the silhouette based on the height ratio
   const scale = height > 0 ? (height / maxHeight) : 0.5;
   const displayHeight = Math.max(scale * 300, 50); // Minimum height of 50px
@@ -74,9 +76,9 @@ const PersonSilhouette: React.FC<PersonSilhouetteProps> = ({
       </div>
       
       <div className="text-center space-y-1">
-        <p className="font-semibold text-gray-700">{label}</p>
-        <p className="text-sm text-gray-500">{height > 0 ? `${height} cm` : 'Enter height'}</p>
-        <p className="text-sm text-gray-500">{height > 0 ? `${(height / 30.48).toFixed(1)} ft` : ''}</p>
+        <p className="font-semibold text-gray-700 dark:text-gray-200">{label}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{height > 0 ? `${height} cm` : t('enterHeight')}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{height > 0 ? `${(height / 30.48).toFixed(1)} ft` : ''}</p>
       </div>
     </div>
   );
