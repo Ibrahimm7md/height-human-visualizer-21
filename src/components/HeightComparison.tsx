@@ -34,40 +34,44 @@ const HeightComparison: React.FC<HeightComparisonProps> = ({
       )}
       
       <div className="relative flex justify-center items-end space-x-12">
-        {/* Height difference visualization line */}
+        {/* Height difference visualization - horizontal line */}
         {heightDifference > 0 && person1Height > 0 && person2Height > 0 && (
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 pointer-events-none">
-            {/* Line from tallest person's head */}
+          <div className="absolute top-0 left-0 right-0 pointer-events-none">
+            {/* Horizontal line from tallest person's head to shorter person's head level */}
             <div 
-              className="absolute bg-yellow-400 shadow-lg rounded-full"
+              className="absolute bg-yellow-400 shadow-lg"
+              style={{
+                height: '3px',
+                width: '12rem', // spans between the two people
+                top: `${((maxHeight - Math.max(person1Height, person2Height)) / maxHeight) * 300}px`,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                borderRadius: '2px'
+              }}
+            />
+            
+            {/* Vertical line down to shorter person's head */}
+            <div 
+              className="absolute bg-yellow-400 shadow-lg"
               style={{
                 width: '3px',
                 height: `${(heightDifference / maxHeight) * 300}px`,
                 top: `${((maxHeight - Math.max(person1Height, person2Height)) / maxHeight) * 300}px`,
-                left: person1Height > person2Height ? '-6rem' : '6rem',
-              }}
-            />
-            
-            {/* Horizontal line to shorter person */}
-            <div 
-              className="absolute bg-yellow-400 shadow-lg rounded-full"
-              style={{
-                width: `${person1Height > person2Height ? '6rem' : '6rem'}`,
-                height: '3px',
-                top: `${((maxHeight - Math.min(person1Height, person2Height)) / maxHeight) * 300}px`,
-                left: person1Height > person2Height ? '-6rem' : '0',
+                left: person1Height > person2Height ? 'calc(50% + 6rem)' : 'calc(50% - 6rem)',
+                borderRadius: '2px'
               }}
             />
             
             {/* Height difference label */}
             <div 
-              className="absolute bg-yellow-100 border-2 border-yellow-400 rounded-lg px-3 py-1 text-sm font-bold text-yellow-800 whitespace-nowrap shadow-lg"
+              className="absolute bg-yellow-100 border-2 border-yellow-400 rounded-lg px-3 py-2 text-sm font-bold text-yellow-800 whitespace-nowrap shadow-lg"
               style={{
-                top: `${((maxHeight - Math.min(person1Height, person2Height)) / maxHeight) * 300 - 15}px`,
-                left: person1Height > person2Height ? '-5rem' : '1rem',
+                top: `${((maxHeight - Math.max(person1Height, person2Height)) / maxHeight) * 300 - 40}px`,
+                left: '50%',
+                transform: 'translateX(-50%)',
               }}
             >
-              +{heightDifference.toFixed(1)} cm
+              فرق الطول: {heightDifference.toFixed(1)} سم
             </div>
           </div>
         )}
