@@ -33,7 +33,45 @@ const HeightComparison: React.FC<HeightComparisonProps> = ({
         </div>
       )}
       
-      <div className="flex justify-center items-end space-x-12">
+      <div className="relative flex justify-center items-end space-x-12">
+        {/* Height difference visualization line */}
+        {heightDifference > 0 && person1Height > 0 && person2Height > 0 && (
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 pointer-events-none">
+            {/* Line from tallest person's head */}
+            <div 
+              className="absolute bg-yellow-400 shadow-lg rounded-full"
+              style={{
+                width: '3px',
+                height: `${(heightDifference / maxHeight) * 300}px`,
+                top: `${((maxHeight - Math.max(person1Height, person2Height)) / maxHeight) * 300}px`,
+                left: person1Height > person2Height ? '-6rem' : '6rem',
+              }}
+            />
+            
+            {/* Horizontal line to shorter person */}
+            <div 
+              className="absolute bg-yellow-400 shadow-lg rounded-full"
+              style={{
+                width: `${person1Height > person2Height ? '6rem' : '6rem'}`,
+                height: '3px',
+                top: `${((maxHeight - Math.min(person1Height, person2Height)) / maxHeight) * 300}px`,
+                left: person1Height > person2Height ? '-6rem' : '0',
+              }}
+            />
+            
+            {/* Height difference label */}
+            <div 
+              className="absolute bg-yellow-100 border-2 border-yellow-400 rounded-lg px-3 py-1 text-sm font-bold text-yellow-800 whitespace-nowrap shadow-lg"
+              style={{
+                top: `${((maxHeight - Math.min(person1Height, person2Height)) / maxHeight) * 300 - 15}px`,
+                left: person1Height > person2Height ? '-5rem' : '1rem',
+              }}
+            >
+              +{heightDifference.toFixed(1)} cm
+            </div>
+          </div>
+        )}
+        
         <PersonSilhouette
           height={person1Height}
           label={person1Label}
