@@ -5,6 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/height-human-visualizer-21/",  // <-- هذا هو السطر اللي لازم تضيفه
   server: {
     host: "::",
     port: 8080,
